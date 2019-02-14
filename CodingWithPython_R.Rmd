@@ -1,0 +1,109 @@
+---
+title: "CopyingwithPython_R"
+author: "Xinbo Lu"
+date: "February 13, 2019"
+output: html_document
+---
+
+## Coding with Python, Extra Credits 
+### Part 3
+#### Task 10
+Create an object that draws from a pool of random integers between 1 and 100 (note you will probably have to import the module random with "import random"), then write out a script that prints the number, then, if that number is 25 or below, prints "1st Quartile"; if it is greater than 25 (not including 25) but equal to or lower than 50, prints "2nd Quartile"; if it is greater than 50 (not including 50) but equal to or lower than 75, prints "3rd Quartile"; and if it is greater than 75 (not including 75) but equal to or lower than 100, prints "4th Quartile".
+
+```{r, echo=TRUE}
+rnd <- sample(1:100,1, replace = TRUE)
+print(rnd)
+if(rnd <= 25) {
+    print("1st Quartile")
+} else if (rnd > 25 & rnd <= 50){
+  print("2nd Quartile")
+} else if (rnd > 50 & rnd <= 75){
+  print("3RD Quartile")
+}else {
+  print("4th Quartile")
+}
+```
+
+### Part 4 Loops
+#### Task 11
+For this task, make a list object, and store the names of at least 6 cities (you choose which) in that list. Then, make a for loop that prints a warning message for each city in the list, using this text, but inserting the city name into the CITY location: "Warning, residents of CITY, temperatures will reach sub-zero temperatures today, please stay indoors if possible"
+
+```{r}
+cities = list("Seattle", "LA", "Vegas", "NYC", "Beijing", "HK")
+for (letter in cities){
+    cat("Warning, residents of", letter,",temperatures will reach sub-zero temperatures today, please stay indoors if possible\n")
+}
+
+```
+
+
+#### Task 12 
+For this task, then, make an empty list to store your results, and create a for loop that produces a series of filenames for shapefiles. I want you to produce the full path, i.e. "U://Users/Zhang/Geog_458/filename.shp", but have the loop replace "filename" with the names of these states, one shapefile per state: "Washington, California, Nevada, Idaho, Montana, Utah, Colorado, New Mexico." You may want to store those names in a separate list like we did with the cities above, each as an individual string (i.e. not one long string). Just to show your work, have it "print" each filename as well when you run the code.
+
+```{r}
+emptyList = list()
+state = list("Washington", "California", "Nevada", "Idaho", "Montana", "Utah", "Colorado", "New Maxico")
+for (state_name in state){
+  x = capture.output(cat(paste("U://Users/Zhang/Geog_458/",state_name,".shp\n", sep = '')))
+  emptyList[state_name]<- x
+}
+emptyList
+```
+
+#### Task 13
+For this task, we are going to make a  simple counting while loop, which is what is commonly used in textbook examples. Make a loop that counts down from 10, stopping at zero. For each count, print a line that says "T-minus COUNT", replacing COUNT with the number.
+
+```{r}
+i <- 10
+while(i >= 0){
+  cat("T-minus",i,"\n")
+  i = i- 1
+}
+```
+
+### Part 5
+#### Task 14 
+Now let's make that while loop from above into a function called "countdown" where we can put different numbers in the argument and have the loop count down to zero. Don't think too hard about how exactly to do this, you've essentially already done the work. Just write the line defining the function, then paste in your while loops, replacing the 10 we used earlier with a dummy variable that will act as the function's argument.
+
+```{r}
+countdown <- function(maxNum){
+  if (maxNum < 0){
+    print("Invalid Number. Enter a number greater or equal to 0")
+  }else{
+    while(maxNum >= 0){
+      cat("T-minus",maxNum,"\n")
+      maxNum = maxNum -1
+    }
+  }
+}
+
+countdown(10)
+```
+
+#### Task 15
+The same logic can be applied to our conditional statement from Part 3. Make a function called "quartile_calc" that takes a number (not a random integer now, but an argument the user inputs) and tells us which quartile it lies within, in a range of 0 to 100 (as if the number was a percent). You will want to add one or two final lines to your conditional statement, however, returning an "Error" message if the number entered by the user is less than 0 or greater than 100.  
+
+```{r}
+quartile_calc<- function(userNum){
+  if(userNum < 0 & userNum > 100){
+   stop("Your number should >= 0 and <= 100")
+  }else if (userNum <= 25){
+    print("1st Quartile")
+  }else if (userNum > 25 & userNum <= 50){
+    print("2nd Quartile")
+  }else if (userNum > 50 & userNum <= 75) {
+    print("3rd Quartile")
+  } else {
+    print("4th Quartile")
+  }
+}
+
+quartile_calc(15)
+quartile_calc(60)
+
+```
+
+
+
+
+
